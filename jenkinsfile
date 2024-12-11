@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    // Run the build script
+                    sh './build.sh'
+                    // Build the Docker image
+                    sh 'docker build -t subaaseshahari/e-commerce-app .'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    // Deploy the Docker container
+                    sh 'docker run -d -p 80:80 subaaseshahari/e-commerce-app'
+                }
+            }
+        }
+    }
+}
